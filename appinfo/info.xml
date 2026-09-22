@@ -13,10 +13,10 @@
 	<author>L. Wenig</author>
 	<namespace>Lager</namespace>
 	<category>tools</category>
-	<website>https://__GITHUB_USER__.github.io/lager/</website>
-	<documentation>https://__GITHUB_USER__.github.io/lager/</documentation>
-	<bugtracker>https://github.com/__GITHUB_USER__/lager/issues</bugtracker>
-	<screenshot>https://raw.githubusercontent.com/__GITHUB_USER__/lager/main/screenshot.png</screenshot>
+	<website>https://wenigdigital.github.io/lager/</website>
+	<documentation>https://wenigdigital.github.io/lager/</documentation>
+	<bugtracker>https://github.com/wenigdigital/lager/issues</bugtracker>
+	<screenshot>https://raw.githubusercontent.com/wenigdigital/lager/main/screenshot.png</screenshot>
 	<donation title="Spenden über PayPal" type="paypal">https://paypal.me/ToniWenig</donation>
 	<dependencies>
 		<php min-version="8.1" max-version="8.4"/>
