@@ -41,7 +41,11 @@ Alle Daten (Struktur, Artikel, Bewegungen, Fotos) bleiben in deiner eigenen Next
 
 ## Lizenz
 
-[AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.de.html)
+[AGPL-3.0-or-later](LICENSE)
+
+## Veröffentlichung
+
+Hinweise für eine signierte Store-Veröffentlichung stehen in [RELEASING.md](RELEASING.md).
 
 ## Spende
 
