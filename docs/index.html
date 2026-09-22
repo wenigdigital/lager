@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lagerverwaltung – Nextcloud App</title>
+<meta name="description" content="Lagerorte, Regale, Fächer, Artikel mit EAN, Wareneingänge &amp; Entnahmen, Historie und Barcode/QR-Cam-Scanning – als App für Nextcloud.">
+<style>
+  :root {
+    --nc-blue: #0082c9;
+    --nc-blue-dark: #006aa3;
+    --ink: #1c2330;
+    --muted: #5c6675;
+    --bg-soft: #f4f7fa;
+    --line: #e3e8ee;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    background: #fff;
+  }
+  a { color: var(--nc-blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header.top {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 24px; border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); z-index: 10;
+  }
+  header.top .logo {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: var(--nc-blue); color: #fff; font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  header.top .name { font-weight: 600; font-size: 16px; }
+  header.top .spacer { flex: 1; }
+  header.top a.btn { padding: 7px 14px; border-radius: 6px; font-size: 14px; }
+
+  .hero {
+    background: linear-gradient(160deg, #0b2540 0%, #0d3a63 55%, #0082c9 130%);
+    color: #fff; padding: 72px 24px 84px; text-align: center;
+  }
+  .hero h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 700; letter-spacing: -.5px; }
+  .hero p.sub {
+    max-width: 680px; margin: 16px auto 0; font-size: 18px; color: #cfe3f5;
+  }
+  .hero .ctas { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 12px 26px; border-radius: 8px; font-size: 16px; font-weight: 600;
+    background: var(--nc-blue); color: #fff !important;
+  }
+  .btn:hover { background: var(--nc-blue-dark); text-decoration: none; }
+  .btn.ghost { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35); }
+  .btn.ghost:hover { background: rgba(255,255,255,.2); }
+
+  main { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 56px 0; }
+  section h2 { font-size: 28px; margin-bottom: 8px; letter-spacing: -.3px; }
+  section p.lead { color: var(--muted); max-width: 720px; margin-bottom: 28px; }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .gallery figure {
+    border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-soft);
+  }
+  .gallery img { width: 100%; display: block; }
+  .gallery figcaption { padding: 10px 14px; font-size: 14px; color: var(--muted); background: #fff; }
+
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .feature {
+    border: 1px solid var(--line); border-radius: 10px; padding: 20px; background: #fff;
+  }
+  .feature .ico { font-size: 26px; }
+  .feature h3 { font-size: 16px; margin: 10px 0 6px; }
+  .feature p { font-size: 14px; color: var(--muted); }
+
+  .install { background: var(--bg-soft); border-radius: 14px; padding: 30px; }
+  .install ol { margin: 14px 0 0 20px; }
+  .install li { margin-bottom: 8px; }
+  code {
+    background: #eef2f6; border: 1px solid var(--line); border-radius: 5px;
+    padding: 1px 7px; font-size: 13px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .donate { text-align: center; }
+  .donate .box {
+    border: 2px dashed var(--nc-blue); border-radius: 14px; padding: 34px 24px; background: #f7fbfe;
+  }
+  .donate p { max-width: 520px; margin: 0 auto 18px; color: var(--muted); }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 28px 24px; text-align: center;
+    color: var(--muted); font-size: 14px;
+  }
+  footer a { margin: 0 10px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="logo">L</div>
+  <div class="name">Lagerverwaltung für Nextcloud</div>
+  <div class="spacer"></div>
+  <a class="btn" href="https://apps.nextcloud.com/apps/lager" target="_blank" rel="noopener">App-Store</a>
+</header>
+
+<div class="hero">
+  <h1>Dein Lager. Dein Nextcloud.</h1>
+  <p class="sub">Lagerorte, Regale und Fächer verwalten, Wareneingänge und Entnahmen buchen –
+  und Artikel per Suche oder <strong>Barcode/QR-Scan mit der Kamera</strong> finden.
+  Alles bleibt in deiner eigenen Nextcloud.</p>
+  <div class="ctas">
+    <a class="btn" href="https://apps.nextcloud.com/apps/lager" target="_blank" rel="noopener">Im App-Store ansehen</a>
+    <a class="btn ghost" href="https://github.com/nextcloud-lager/lager" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div>
+
+<main>
+
+<section>
+  <h2>Screenshots</h2>
+  <p class="lead">Echte Screenshots aus der App – von der Lagerstruktur über den Cam-Scanner bis zur Bewegungs-Historie.</p>
+  <div class="gallery">
+    <figure>
+      <img src="screenshots/01_main.png" alt="Hauptansicht mit Lagerbaum und Artikelliste" loading="lazy">
+      <figcaption>Hauptansicht: Lagerorte, Regale, Fächer und Artikel mit Beständen</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshots/02_scan.png" alt="Barcode- und QR-Scanner mit Kamera" loading="lazy">
+      <figcaption>Barcode &amp; QR scannen – live mit der Kamera oder aus einer Foto-Datei</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshots/03_edit.png" alt="Artikel bearbeiten mit Foto" loading="lazy">
+      <figcaption>Artikel mit Foto, Beschreibung und EAN verwalten</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshots/04_photo.png" alt="Große Foto-Ansicht eines Artikels" loading="lazy">
+      <figcaption>Fotos per Knopfdruck groß ansehen</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshots/05_history.png" alt="Bewegungs-Historie" loading="lazy">
+      <figcaption>Vollständige Bewegungs-Historie: Eingang, Entnahme, Benutzer, Notiz</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshots/06_search.png" alt="Artikel- und EAN-Suche" loading="lazy">
+      <figcaption>Schnelle Suche nach Artikel oder EAN</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <h2>Funktionen</h2>
+  <div class="features">
+    <div class="feature">
+      <div class="ico">🗂️</div>
+      <h3>Lagerstruktur</h3>
+      <p>Lagerorte mit Regalen/Schränken und Fächern/Flächen – beliebig viele, umbenennbar und löschbar.</p>
+    </div>
+    <div class="feature">
+      <div class="ico">📦</div>
+      <h3>Artikel &amp; Fotos</h3>
+      <p>Name, Beschreibung, EAN/Code und optional ein Foto – direkt mit der Kamera aufnehmen oder Datei hochladen.</p>
+    </div>
+    <div class="feature">
+      <div class="ico">📲</div>
+      <h3>Cam-Scanning</h3>
+      <p>QR-Codes, EAN-13 und EAN-8 live mit der Kamera scannen. Rückkamera als Standard, wählbar bei mehreren Kameras.</p>
+    </div>
+    <div class="feature">
+      <div class="ico">🖼️</div>
+      <h3>Foto-Scan</h3>
+      <p>Code aus einem Foto oder einer Datei erkennen – robust, inkl. Entzerrung schräger Aufnahmen.</p>
+    </div>
+    <div class="feature">
+      <div class="ico">🔁</div>
+      <h3>Buchungen</h3>
+      <p>Wareneingang und Entnahme mit Menge, Notiz und Benutzer – jederzeit nachvollziehbar in der Historie.</p>
+    </div>
+    <div class="feature">
+      <div class="ico">🔍</div>
+      <h3>Suche &amp; Codes</h3>
+      <p>Suche nach Artikel oder EAN (Groß-/Kleinschreibung egal) und QR/Barcode-Erzeugung für jeden Artikel.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Installation</h2>
+  <div class="install">
+    <p><strong>Über den App-Store (empfohlen):</strong></p>
+    <ol>
+      <li>In Nextcloud zu <em>Apps</em> wechseln und „<strong>Lagerverwaltung</strong>" suchen.</li>
+      <li>„Installieren und aktivieren" klicken – fertig.</li>
+    </ol>
+    <p style="margin-top:18px"><strong>Manuell:</strong></p>
+    <ol>
+      <li>Repository klonen oder herunterladen: <code>git clone https://github.com/nextcloud-lager/lager.git</code></li>
+      <li>Den Ordner nach <code>nextcloud/apps/lager</code> (oder <code>apps-extra/lager</code>) kopieren.</li>
+      <li>App im Admin-Bereich aktivieren.</li>
+    </ol>
+    <p style="margin-top:18px">Voraussetzungen: Nextcloud 26–34, PHP 8.1–8.4. Für das Cam-Scanning ein moderner Browser mit Kamera-Zugriff (Chrome/Edge, Firefox).</p>
+  </div>
+</section>
+
+<section class="donate">
+  <div class="box">
+    <h2 style="font-size:24px">Gefällt dir die App?</h2>
+    <p>Dann unterstütze die Weiterentwicklung gerne mit einer kleinen Spende – danke für dein Feedback und deine Ideen!</p>
+    <a class="btn" href="https://paypal.me/ToniWenig" target="_blank" rel="noopener">💙 Spenden über PayPal</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>
+    <a href="https://apps.nextcloud.com/apps/lager" target="_blank" rel="noopener">App-Store</a> ·
+    <a href="https://github.com/nextcloud-lager/lager" target="_blank" rel="noopener">GitHub</a> ·
+    <a href="https://paypal.me/ToniWenig" target="_blank" rel="noopener">Spenden</a>
+  </div>
+  <div style="margin-top:10px">Lagerverwaltung für Nextcloud · Lizenz AGPL-3.0 · Alle Daten bleiben in deiner Nextcloud-Instanz.</div>
+</footer>
+
+</body>
+</html>

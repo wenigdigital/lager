@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<info>
+	<id>lager</id>
+	<name>Lagerverwaltung</name>
+	<summary>Lagerorte, Regale, Fächer, Artikel mit EAN und Barcode/QR-Scanning verwalten</summary>
+	<description>
+		Lagerhaltungs-App für Nextcloud: Lagerstruktur (Lagerorte, Regale/Schränke, Fächer/Flächen),
+		Artikel mit Beschreibung, EAN/Code und Foto, Wareneingänge und Entnahmen mit vollständiger
+		Historie, Artikel-/EAN-Suche sowie Barcode- und QR-Scanning mit der Kamera oder aus Foto-Dateien.
+	</description>
+	<version>0.1.0</version>
+	<licence>agpl</licence>
+	<author>L. Wenig</author>
+	<namespace>Lager</namespace>
+	<category>tools</category>
+	<website>https://__GITHUB_USER__.github.io/lager/</website>
+	<documentation>https://__GITHUB_USER__.github.io/lager/</documentation>
+	<bugtracker>https://github.com/__GITHUB_USER__/lager/issues</bugtracker>
+	<screenshot>https://raw.githubusercontent.com/__GITHUB_USER__/lager/main/screenshot.png</screenshot>
+	<donation title="Spenden über PayPal" type="paypal">https://paypal.me/ToniWenig</donation>
+	<dependencies>
+		<php min-version="8.1" max-version="8.4"/>
+		<nextcloud min-version="26" max-version="34"/>
+	</dependencies>
+	<navigations>
+		<navigation>
+			<name>Lagerverwaltung</name>
+			<route>lager.page.main</route>
+			<order>10</order>
+		</navigation>
+	</navigations>
+</info>
