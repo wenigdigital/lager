@@ -109,7 +109,8 @@ OC.L10N.register(
 		"Image could not be processed.": "Bild konnte nicht verarbeitet werden.",
 		"Image is too large (max. 2 MB after compression).": "Bild ist zu groß (max. 2 MB nach Kompression).",
 		"Not found.": "Nicht gefunden.",
-		"Unexpected error: ": "Unerwarteter Fehler: ",
+		"Unexpected error.": "Unerwarteter Fehler.",
+		"This EAN/code is already assigned to another article.": "Dieser EAN/Code ist bereits einem anderen Artikel zugeordnet.",
 		"Cancel": "Abbrechen",
 		"Capture": "Aufnehmen",
 		"Camera not supported in this browser. Use file selection instead.": "Kamera wird von diesem Browser nicht unterstützt. Bitte Datei auswählen verwenden."

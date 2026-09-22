@@ -150,12 +150,18 @@ class LagerService {
 	}
 
 	public function deleteLocation(int $id): void {
-		$location = $this->locationMapper->find($id);
-		$cabinets = $this->cabinetMapper->findByLocation($id);
-		foreach ($cabinets as $cabinet) {
-			$this->deleteCabinet((int)$cabinet->getId());
+		$this->db->beginTransaction();
+		try {
+			$location = $this->locationMapper->find($id);
+			foreach ($this->cabinetMapper->findByLocation($id) as $cabinet) {
+				$this->deleteCabinetInTransaction((int)$cabinet->getId());
+			}
+			$this->locationMapper->delete($location);
+			$this->db->commit();
+		} catch (\Throwable $e) {
+			$this->db->rollBack();
+			throw $e;
 		}
-		$this->locationMapper->delete($location);
 	}
 
 	public function createCabinet(int $locationId, string $name, ?string $description): array {
@@ -181,10 +187,20 @@ class LagerService {
 	}
 
 	public function deleteCabinet(int $id): void {
+		$this->db->beginTransaction();
+		try {
+			$this->deleteCabinetInTransaction($id);
+			$this->db->commit();
+		} catch (\Throwable $e) {
+			$this->db->rollBack();
+			throw $e;
+		}
+	}
+
+	private function deleteCabinetInTransaction(int $id): void {
 		$cabinet = $this->cabinetMapper->find($id);
-		$slots = $this->slotMapper->findByCabinet($id);
-		foreach ($slots as $slot) {
-			$this->deleteSlot((int)$slot->getId());
+		foreach ($this->slotMapper->findByCabinet($id) as $slot) {
+			$this->deleteSlotInTransaction((int)$slot->getId());
 		}
 		$this->cabinetMapper->delete($cabinet);
 	}
@@ -212,10 +228,20 @@ class LagerService {
 	}
 
 	public function deleteSlot(int $id): void {
+		$this->db->beginTransaction();
+		try {
+			$this->deleteSlotInTransaction($id);
+			$this->db->commit();
+		} catch (\Throwable $e) {
+			$this->db->rollBack();
+			throw $e;
+		}
+	}
+
+	private function deleteSlotInTransaction(int $id): void {
 		$slot = $this->slotMapper->find($id);
-		$stocks = $this->stockMapper->findBySlot($id);
-		foreach ($stocks as $stock) {
-			$this->deleteStock((int)$stock->getId());
+		foreach ($this->stockMapper->findBySlot($id) as $stock) {
+			$this->deleteStockInTransaction((int)$stock->getId());
 		}
 		$this->slotMapper->delete($slot);
 	}
@@ -227,7 +253,7 @@ class LagerService {
 		$existing = $this->stockMapper->findBySlotAndArticle($slotId, $article);
 		if ($existing !== null) {
 			if ($quantity > 0) {
-				return $this->recordMovement($existing, 'in', $quantity, $this->l10n->t('Initial stock'), true)->jsonSerialize();
+				return $this->recordMovement($existing, 'in', $quantity, $this->l10n->t('Initial stock'))->jsonSerialize();
 			}
 			throw new \InvalidArgumentException($this->l10n->t('This article is already in the slot.'));
 		}
@@ -236,12 +262,14 @@ class LagerService {
 		$stock->setArticle($article);
 		$stock->setDescription($this->normalizeDescription($description));
 		$stock->setQuantity(0);
-		$stock->setEan($this->normalizeEan($ean));
+		$ean = $this->normalizeEan($ean);
+		$this->assertEanAvailable($ean);
+		$stock->setEan($ean);
 		$stock->setCreatedAt(time());
 		$stock->setUpdatedAt(time());
 		$stock = $this->stockMapper->insert($stock);
 		if ($quantity > 0) {
-			return $this->recordMovement($stock, 'in', $quantity, $this->l10n->t('Initial stock'), true)->jsonSerialize();
+			return $this->recordMovement($stock, 'in', $quantity, $this->l10n->t('Initial stock'))->jsonSerialize();
 		}
 		return $stock->jsonSerialize();
 	}
@@ -249,19 +277,37 @@ class LagerService {
 	public function updateStock(int $id, ?string $article, ?string $description, ?string $ean = null): array {
 		$stock = $this->stockMapper->find($id);
 		if ($article !== null) {
-			$stock->setArticle($this->normalizeArticle($article));
+			$article = $this->normalizeArticle($article);
+			$existing = $this->stockMapper->findBySlotAndArticle((int)$stock->getSlotId(), $article);
+			if ($existing !== null && (int)$existing->getId() !== (int)$stock->getId()) {
+				throw new \InvalidArgumentException($this->l10n->t('This article is already in the slot.'));
+			}
+			$stock->setArticle($article);
 		}
 		if ($description !== null) {
 			$stock->setDescription($this->normalizeDescription($description));
 		}
 		if ($ean !== null) {
-			$stock->setEan($this->normalizeEan($ean));
+			$ean = $this->normalizeEan($ean);
+			$this->assertEanAvailable($ean, (int)$stock->getId());
+			$stock->setEan($ean);
 		}
 		$stock->setUpdatedAt(time());
 		return $this->stockMapper->update($stock)->jsonSerialize();
 	}
 
 	public function deleteStock(int $id): void {
+		$this->db->beginTransaction();
+		try {
+			$this->deleteStockInTransaction($id);
+			$this->db->commit();
+		} catch (\Throwable $e) {
+			$this->db->rollBack();
+			throw $e;
+		}
+	}
+
+	private function deleteStockInTransaction(int $id): void {
 		$stock = $this->stockMapper->find($id);
 		if ((int)$stock->getQuantity() > 0) {
 			throw new \InvalidArgumentException($this->l10n->t('Stock can only be deleted with a quantity of 0.'));
@@ -338,7 +384,6 @@ class LagerService {
 			$type,
 			$quantity,
 			$note,
-			false,
 		)->jsonSerialize();
 	}
 
@@ -377,7 +422,7 @@ class LagerService {
 		return $result;
 	}
 
-	private function recordMovement(StockItem $stock, string $type, int $quantity, ?string $note, bool $isInitial): StockItem {
+	private function recordMovement(StockItem $stock, string $type, int $quantity, ?string $note): StockItem {
 		$type = strtolower(trim($type));
 		if (!in_array($type, ['in', 'out'], true)) {
 			throw new \InvalidArgumentException($this->l10n->t('Movement type must be "in" or "out".'));
@@ -386,10 +431,6 @@ class LagerService {
 		if ($quantity <= 0) {
 			throw new \InvalidArgumentException($this->l10n->t('Quantity must be greater than 0.'));
 		}
-		if ($type === 'out' && $quantity > (int)$stock->getQuantity()) {
-			throw new \InvalidArgumentException($this->l10n->t('Not enough stock for this withdrawal.'));
-		}
-
 		$now = time();
 		$slot = $this->slotMapper->find((int)$stock->getSlotId());
 		$cabinet = $this->cabinetMapper->find((int)$slot->getCabinetId());
@@ -398,13 +439,7 @@ class LagerService {
 
 		$this->db->beginTransaction();
 		try {
-			if ($type === 'in') {
-				$stock->setQuantity((int)$stock->getQuantity() + $quantity);
-			} else {
-				$stock->setQuantity((int)$stock->getQuantity() - $quantity);
-			}
-			$stock->setUpdatedAt($now);
-			$stock = $this->stockMapper->update($stock);
+			$stock = $this->updateStockQuantityAtomically((int)$stock->getId(), $type, $quantity, $now);
 
 			$note = $this->normalizeDescription($note);
 			$movement = new Movement();
@@ -427,6 +462,22 @@ class LagerService {
 			$this->db->rollBack();
 			throw $e;
 		}
+	}
+
+	private function updateStockQuantityAtomically(int $stockId, string $type, int $quantity, int $updatedAt): StockItem {
+		$qb = $this->db->getQueryBuilder();
+		$adjustment = $type === 'in' ? $quantity : -$quantity;
+		$qb->update('lager_stock')
+			->set('quantity', $qb->createFunction('quantity + ' . $qb->createNamedParameter($adjustment, IQueryBuilder::PARAM_INT)))
+			->set('updated_at', $qb->createNamedParameter($updatedAt, IQueryBuilder::PARAM_INT))
+			->where($qb->expr()->eq('id', $qb->createNamedParameter($stockId, IQueryBuilder::PARAM_INT)));
+		if ($type === 'out') {
+			$qb->andWhere($qb->expr()->gte('quantity', $qb->createNamedParameter($quantity, IQueryBuilder::PARAM_INT)));
+		}
+		if ($qb->executeStatement() !== 1) {
+			throw new \InvalidArgumentException($this->l10n->t('Not enough stock for this withdrawal.'));
+		}
+		return $this->stockMapper->find($stockId);
 	}
 
 	public function searchByCode(string $code): ?array {
@@ -484,6 +535,16 @@ class LagerService {
 			throw new \InvalidArgumentException($this->l10n->t('EAN/code is too long (max. 32 characters).'));
 		}
 		return $value;
+	}
+
+	private function assertEanAvailable(?string $ean, ?int $exceptId = null): void {
+		if ($ean === null) {
+			return;
+		}
+		$existing = $this->stockMapper->findByEan($ean);
+		if ($existing !== null && (int)$existing->getId() !== $exceptId) {
+			throw new \InvalidArgumentException($this->l10n->t('This EAN/code is already assigned to another article.'));
+		}
 	}
 
 	private function normalizeName(string $value, string $label): string {

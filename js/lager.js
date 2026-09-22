@@ -8,6 +8,7 @@
 	const API = '/index.php/apps/lager/api';
 
 	let token = '';
+	let isAdmin = false;
 	let searchTimer = null;
 	let expanded = new Set();
 
@@ -130,7 +131,8 @@
 		"Image could not be processed.": "Bild konnte nicht verarbeitet werden.",
 		"Image is too large (max. 2 MB after compression).": "Bild ist zu groß (max. 2 MB nach Kompression).",
 		"Not found.": "Nicht gefunden.",
-		"Unexpected error: ": "Unerwarteter Fehler: ",
+		"Unexpected error.": "Unerwarteter Fehler.",
+		"This EAN/code is already assigned to another article.": "Dieser EAN/Code ist bereits einem anderen Artikel zugeordnet.",
 		"Cancel": "Abbrechen",
 		"Capture": "Aufnehmen",
 		"Camera not supported in this browser. Use file selection instead.": "Kamera wird von diesem Browser nicht unterstützt. Bitte Datei auswählen verwenden.",
@@ -159,6 +161,8 @@
 
 	function init() {
 		token = (window.OC && window.OC.requestToken) || '';
+		const appContent = document.getElementById('app-content');
+		isAdmin = appContent && appContent.dataset.isAdmin === '1';
 		if (!token) {
 			const meta = document.querySelector('meta[name="csrf-token"]');
 			if (meta) {
@@ -339,14 +343,14 @@
 		if (type === 'location') {
 			wrap.appendChild(rowBtn('+', T('Create cabinet'), function () { addChildForm('cabinet', node, function (parent, values) { return api('POST', '/cabinet', { location_id: parent.id, name: values.name, description: values.description }); }); }));
 			wrap.appendChild(rowBtn('\u270E', T('Rename'), function () { renaming('location', node); }));
-			wrap.appendChild(rowBtn('\u00D7', T('Delete'), function () { confirmAction(T('Really delete location "{name}"?', { name: node.name }), function () { return api('DELETE', '/location/' + node.id); }); }));
+			if (isAdmin) { wrap.appendChild(rowBtn('\u00D7', T('Delete'), function () { confirmAction(T('Really delete location "{name}"?', { name: node.name }), function () { return api('DELETE', '/location/' + node.id); }); })); }
 		} else if (type === 'cabinet') {
 			wrap.appendChild(rowBtn('+', T('Create slot'), function () { addChildForm('slot', node, function (parent, values) { return api('POST', '/slot', { cabinet_id: parent.id, name: values.name, description: values.description }); }); }));
 			wrap.appendChild(rowBtn('\u270E', T('Rename'), function () { renaming('cabinet', node); }));
-			wrap.appendChild(rowBtn('\u00D7', T('Delete'), function () { confirmAction(T('Really delete cabinet "{name}"?', { name: node.name }), function () { return api('DELETE', '/cabinet/' + node.id); }); }));
+			if (isAdmin) { wrap.appendChild(rowBtn('\u00D7', T('Delete'), function () { confirmAction(T('Really delete cabinet "{name}"?', { name: node.name }), function () { return api('DELETE', '/cabinet/' + node.id); }); })); }
 		} else if (type === 'slot') {
 			wrap.appendChild(rowBtn('\u270E', T('Rename'), function () { renaming('slot', node); }));
-			wrap.appendChild(rowBtn('\u00D7', T('Delete'), function () { confirmAction(T('Really delete slot "{name}"?', { name: node.name }), function () { return api('DELETE', '/slot/' + node.id); }); }));
+			if (isAdmin) { wrap.appendChild(rowBtn('\u00D7', T('Delete'), function () { confirmAction(T('Really delete slot "{name}"?', { name: node.name }), function () { return api('DELETE', '/slot/' + node.id); }); })); }
 		}
 		return wrap;
 	}
@@ -483,14 +487,16 @@
 				const editBtn = el('button', 'row-btn', '\u270E');
 				editBtn.type = 'button'; editBtn.title = T('Edit');
 				editBtn.addEventListener('click', function () { stockEditForm(item); });
-				const delBtn = el('button', 'row-btn', '\u00D7');
-				delBtn.type = 'button'; delBtn.title = T('Delete');
-				delBtn.addEventListener('click', function () { confirmAction(T('Delete article?'), function () { return api('DELETE', '/stock/' + item.id); }, function () { loadSlotDetail(item.slot_id); loadTree(); }); });
 				actTd.appendChild(qrBtn);
 				actTd.appendChild(inBtn);
 				actTd.appendChild(outBtn);
 				actTd.appendChild(editBtn);
-				actTd.appendChild(delBtn);
+				if (isAdmin) {
+					const delBtn = el('button', 'row-btn', '\u00D7');
+					delBtn.type = 'button'; delBtn.title = T('Delete');
+					delBtn.addEventListener('click', function () { confirmAction(T('Delete article?'), function () { return api('DELETE', '/stock/' + item.id); }, function () { loadSlotDetail(item.slot_id); loadTree(); }); });
+					actTd.appendChild(delBtn);
+				}
 				tr.appendChild(actTd);
 				tbody.appendChild(tr);
 			});

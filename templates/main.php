@@ -14,7 +14,7 @@ Util::addScript('lager', 'html5qrcode.min');
 Util::addScript('lager', 'lager');
 Util::addStyle('lager', 'lager');
 ?>
-<div id="app-content" class="app-lager">
+<div id="app-content" class="app-lager" data-is-admin="<?php p($_['isAdmin'] ? '1' : '0'); ?>">
 	<header class="lager-header">
 		<h1>
 			<img class="app-icon" src="<?php p(image_path('lager', 'app-dark.svg')); ?>" alt=""/>

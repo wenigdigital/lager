@@ -8,19 +8,24 @@
 		Artikel mit Beschreibung, EAN/Code und Foto, Wareneingänge und Entnahmen mit vollständiger
 		Historie, Artikel-/EAN-Suche sowie Barcode- und QR-Scanning mit der Kamera oder aus Foto-Dateien.
 	</description>
-	<version>0.1.0</version>
-	<licence>agpl</licence>
+	<version>0.2.0</version>
+	<licence>AGPL-3.0-or-later</licence>
 	<author>L. Wenig</author>
 	<namespace>Lager</namespace>
 	<category>tools</category>
 	<website>https://wenigdigital.github.io/lager/</website>
-	<documentation>https://wenigdigital.github.io/lager/</documentation>
-	<bugtracker>https://github.com/wenigdigital/lager/issues</bugtracker>
+	<documentation>
+		<user>https://wenigdigital.github.io/lager/</user>
+		<admin>https://wenigdigital.github.io/lager/</admin>
+		<developer>https://github.com/wenigdigital/lager</developer>
+	</documentation>
+	<bugs>https://github.com/wenigdigital/lager/issues</bugs>
+	<repository type="git">https://github.com/wenigdigital/lager.git</repository>
 	<screenshot>https://raw.githubusercontent.com/wenigdigital/lager/main/screenshot.png</screenshot>
 	<donation title="Spenden über PayPal" type="paypal">https://paypal.me/ToniWenig</donation>
 	<dependencies>
 		<php min-version="8.1" max-version="8.4"/>
-		<nextcloud min-version="26" max-version="34"/>
+		<nextcloud min-version="30" max-version="36"/>
 	</dependencies>
 	<navigations>
 		<navigation>

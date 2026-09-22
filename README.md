@@ -31,7 +31,9 @@ Eine schlanke Lagerhaltungs-App für Nextcloud: Verwalte deine Lagerorte, Regale
 1. App im [Nextcloud App-Store](https://apps.nextcloud.com/apps/lager) suchen und installieren, **oder**
 2. den Ordner in `apps/` (oder `apps-extra/`) kopieren und im Admin-Bereich aktivieren.
 
-Voraussetzung: Nextcloud 26–34, PHP 8.1–8.4. Für das Cam-Scanning wird ein moderner Browser mit Kamera-Zugriff empfohlen (Chrome/Edge, Firefox).
+Voraussetzung: Nextcloud 30–36, PHP 8.1–8.4. Für das Cam-Scanning wird ein moderner Browser mit Kamera-Zugriff empfohlen (Chrome/Edge, Firefox).
+
+Löschen von Lagerorten, Regalen, Fächern und Artikeln ist ausschließlich Nextcloud-Administratoren erlaubt.
 
 ## Datenschutz
 
