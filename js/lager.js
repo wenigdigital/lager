@@ -161,14 +161,18 @@
 
 	function init() {
 		token = (window.OC && window.OC.requestToken) || '';
-		const appContent = document.getElementById('app-content');
-		isAdmin = appContent && appContent.dataset.isAdmin === '1';
+		if (!token && document.head) {
+			// NC >= 28: Request-Token liegt in <head data-requesttoken="...">
+			token = document.head.getAttribute('data-requesttoken') || '';
+		}
 		if (!token) {
 			const meta = document.querySelector('meta[name="csrf-token"]');
 			if (meta) {
 				token = meta.getAttribute('content') || '';
 			}
 		}
+		const appContent = document.getElementById('app-content');
+		isAdmin = appContent && appContent.dataset.isAdmin === '1';
 		bind();
 		loadTree();
 	}

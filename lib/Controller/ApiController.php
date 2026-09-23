@@ -10,6 +10,7 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
@@ -28,6 +29,7 @@ class ApiController extends Controller {
 	}
 
 	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function tree(): JSONResponse {
 		return $this->handle(function (): array {
 			return $this->service->getTree();
@@ -35,6 +37,7 @@ class ApiController extends Controller {
 	}
 
 	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function stockBySlot(int $slot_id): JSONResponse {
 		return $this->handle(function () use ($slot_id): array {
 			return [
@@ -45,6 +48,7 @@ class ApiController extends Controller {
 	}
 
 	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function history(int $limit = 100, ?string $slot_id = null, ?string $article = null): JSONResponse {
 		return $this->handle(function () use ($limit, $slot_id, $article): array {
 			return $this->service->getHistory($limit, $slot_id, $article);
@@ -52,6 +56,7 @@ class ApiController extends Controller {
 	}
 
 	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function search(string $q = ''): JSONResponse {
 		return $this->handle(function () use ($q): array {
 			return $this->service->searchStock($q);
@@ -158,6 +163,7 @@ class ApiController extends Controller {
 	}
 
 	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function scanByCode(string $code): JSONResponse {
 		return $this->handle(function () use ($code): array {
 			$result = $this->service->searchByCode($code);
@@ -183,6 +189,7 @@ class ApiController extends Controller {
 	}
 
 	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function getStockImage(int $id): Response {
 		$data = $this->service->getItemImage($id);
 		if ($data === null) {

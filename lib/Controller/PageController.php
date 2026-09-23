@@ -7,6 +7,7 @@ namespace OCA\Lager\Controller;
 use OCA\Lager\AppInfo\Application;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IGroupManager;
@@ -25,6 +26,7 @@ class PageController extends Controller {
 	}
 
 	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function main(): TemplateResponse {
 		// App-l10n-Datei (l10n/{lang}.js) wird vom Core automatisch
 		// vor das erste Util::addScript('lager', ...) im Template geladen.
@@ -39,6 +41,7 @@ class PageController extends Controller {
 	}
 
 	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function redirect(): RedirectResponse {
 		return new RedirectResponse($this->urlGenerator->linkToRoute('lager_page_main'));
 	}
