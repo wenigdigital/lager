@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+- Add a complete App Store description with features, privacy information, and administrator-only deletion rights.
+- Serve App Store screenshots from the GitHub Pages site.
+- Use consistent author metadata and the current App Store schema.
+
 ## 0.2.1
 
 - Fix CSRF compatibility for read-only requests and the app page on Nextcloud 30.

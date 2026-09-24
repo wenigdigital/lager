@@ -28,7 +28,7 @@ Alle Daten, Bestände und Fotos bleiben in der eigenen Nextcloud-Instanz. Es wer
 
 Das Löschen von Lagerorten, Regalen, Fächern und Artikeln ist ausschließlich Nextcloud-Administratoren erlaubt.
 ]]></description>
-	<version>0.2.1</version>
+	<version>0.2.2</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author>T. Wenig</author>
 	<namespace>Lager</namespace>
