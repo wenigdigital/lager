@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+- Add additional GitHub Pages screenshots to the App Store metadata.
+
 ## 0.2.2
 
 - Add a complete App Store description with features, privacy information, and administrator-only deletion rights.
