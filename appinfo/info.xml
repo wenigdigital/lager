@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <info>
 	<id>lager</id>
-	<name>Lagerverwaltung</name>
+	<name>Lager</name>
 	<summary>Lagerorte, Regale, Fächer, Artikel mit EAN und Barcode/QR-Scanning verwalten</summary>
 	<description>
-		Lagerhaltungs-App für Nextcloud: Lagerstruktur (Lagerorte, Regale/Schränke, Fächer/Flächen),
+		Lager für Nextcloud: Lagerstruktur (Lagerorte, Regale/Schränke, Fächer/Flächen),
 		Artikel mit Beschreibung, EAN/Code und Foto, Wareneingänge und Entnahmen mit vollständiger
 		Historie, Artikel-/EAN-Suche sowie Barcode- und QR-Scanning mit der Kamera oder aus Foto-Dateien.
 	</description>
@@ -29,7 +29,7 @@
 	</dependencies>
 	<navigations>
 		<navigation>
-			<name>Lagerverwaltung</name>
+			<name>Lager</name>
 			<route>lager.page.main</route>
 			<order>10</order>
 		</navigation>

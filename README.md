@@ -1,6 +1,6 @@
-# Lagerverwaltung für Nextcloud
+# Lager für Nextcloud
 
-Eine schlanke Lagerhaltungs-App für Nextcloud: Verwalte deine Lagerorte, Regale und Fächer, buche Wareneingänge und -entnahmen und finde Artikel per Suche oder **Barcode/QR-Scan mit der Kamera**.
+Eine schlanke Lager-App für Nextcloud: Verwalte deine Lagerorte, Regale und Fächer, buche Wareneingänge und -entnahmen und finde Artikel per Suche oder **Barcode/QR-Scan mit der Kamera**.
 
 ![Hauptansicht](docs/screenshots/01_main.png)
 

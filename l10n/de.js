@@ -1,7 +1,7 @@
 OC.L10N.register(
 	"lager",
 	{
-		"Warehouse": "Lagerverwaltung",
+		"Warehouse": "Lager",
 		"Scan barcode/QR": "Barcode/QR scannen",
 		"Scan": "Scannen",
 		"Search article or EAN …": "Artikel oder EAN suchen …",

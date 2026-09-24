@@ -21,7 +21,7 @@
 	// Eingebettete deutsche Uebersetzungen (Fallback, falls die gecachte
 	// l10n/de.js-Datei im Browser aelter als dieses JS ist).
 	const DE_I18N = {
-		"Warehouse": "Lagerverwaltung",
+		"Warehouse": "Lager",
 		"Scan barcode/QR": "Barcode/QR scannen",
 		"Scan": "Scannen",
 		"Search article or EAN …": "Artikel oder EAN suchen …",
