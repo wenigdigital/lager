@@ -43,6 +43,8 @@ Das Löschen von Lagerorten, Regalen, Fächern und Artikeln ist ausschließlich 
 	<repository type="git">https://github.com/wenigdigital/lager.git</repository>
 	<screenshot>https://wenigdigital.github.io/lager/screenshots/01_main.png</screenshot>
 	<screenshot>https://wenigdigital.github.io/lager/screenshots/02_scan.png</screenshot>
+	<screenshot>https://wenigdigital.github.io/lager/screenshots/03_edit.png</screenshot>
+	<screenshot>https://wenigdigital.github.io/lager/screenshots/05_history.png</screenshot>
 	<donation title="Spenden über PayPal" type="paypal">https://paypal.me/ToniWenig</donation>
 	<dependencies>
 		<php min-version="8.1" max-version="8.4"/>
