@@ -29,7 +29,7 @@ that is archived, leaving the Git checkout unchanged.
 
 1. Install the archive on a test Nextcloud instance and exercise login, stock
    movement, deletion as an administrator, and deletion denial as a regular user.
-2. Upload the generated archive for version `0.2.0` to the Nextcloud App Store.
+2. Upload the generated archive for version `0.2.1` to the Nextcloud App Store.
 3. Create the matching GitHub release and attach the same archive and its SHA-256
    checksum.
 

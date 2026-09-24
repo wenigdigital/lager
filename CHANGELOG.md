@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Fix CSRF compatibility for read-only requests and the app page on Nextcloud 30.
+
 ## 0.2.0
 
 - Restrict deleting locations, cabinets, slots, and articles to Nextcloud administrators.

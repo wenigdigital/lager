@@ -8,7 +8,7 @@
 		Artikel mit Beschreibung, EAN/Code und Foto, Wareneingänge und Entnahmen mit vollständiger
 		Historie, Artikel-/EAN-Suche sowie Barcode- und QR-Scanning mit der Kamera oder aus Foto-Dateien.
 	</description>
-	<version>0.2.0</version>
+	<version>0.2.1</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author>L. Wenig</author>
 	<namespace>Lager</namespace>
